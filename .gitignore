@@ -1,2 +1,2 @@
 # Ignore text file
-test.txt
+.streamlit/secrets.toml

@@ -1,4 +1,5 @@
 import streamlit as st
+from openai import OpenAI
 import random
 import time
 
@@ -16,12 +17,10 @@ def response_generator():
         yield word + " "
         time.sleep(0.05)
 
-# Checks in the dialog has been initialized
-if "dialog" not in st.session_state:
-    #Sets the variable to 0, indicating popup window has not been shown. 
-    st.session_state.dialog = 0
-
-
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-4o-mini"
 #Initialize pop window ("title", "size of window")
 @st.dialog("Welcome to SWIFT's Chatbot @ CSAF 2024", width= "large")
 def display():
@@ -56,12 +55,20 @@ if prompt := st.chat_input("What is up?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     
-    response = f"Echo '{prompt}'"
+    
     # Display assistant response in chat message container
     if len(st.session_state.messages) >= 2:
         with st.chat_message("assistant"):
-            st.markdown(response)
+            stream = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+            )
         # Add assistant response to chat history
+            response = st.write_stream(stream)
         st.session_state.messages.append({"role": "assistant", "content": response})
             
 

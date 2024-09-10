@@ -1,0 +1,20 @@
+What is SQL?
+SQL stands for Structured Query Language and is a language used to manage data in databases.
+
+What can SQL do?
+SQL has many uses, which inlcude executing queries against databases; retrieving data from databases; inserting, updating, and deleting database records; creating new databases, tables, and views; and set permissions.
+
+Databases and Tables
+Database: collection of organized data.
+Tables: containers for data in a database.
+
+Creating Databases
+CREATE DATABASE databasename;
+
+Creating Tables
+CREATE TABLE tablename (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);

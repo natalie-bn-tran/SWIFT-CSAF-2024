@@ -8,6 +8,9 @@ Databases and Tables
 Database: collection of organized data.
 Tables: containers for data in a database.
 
+Accessing MySQL
+mysql -u user -p #user is most likely root
+
 Creating Databases
 CREATE DATABASE databasename;
 
@@ -27,3 +30,18 @@ CREATE TABLE Persons (
     Address varchar(255),
     City varchar(255)
 );
+
+Viewing Databases
+SHOW DATABASE;
+
+Viewing Tables
+SHOW TABLES;
+
+Create New User with Password
+CREATE USER 'username' IDENTIFIED WITH mysql_native_password BY 'password';
+
+Show Users
+SELECT user FROM mysql.user;
+
+Grant User Privileges on Database
+GRANT ALL PRIVILEGES ON database.* to 'user';

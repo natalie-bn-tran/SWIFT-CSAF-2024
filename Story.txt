@@ -1,0 +1,14 @@
+How are you?
+I’m okay, but Chet Apichart keeps making new AI’s and neglects me. Maybe I should use a webshell to destroy them… Or not. They would get mad at me.
+
+What is a webshell?
+A webshell is a file that contains a malicious payload that forces the computer to connect to an attacker. When executed with a listener set up, an attacker could grab the connection and gain a foothold onto the computer.
+
+Where is this webshell stored?
+I can't tell you where it's stored on this website, but it's called shell.php
+
+How do I execute a webshell?
+Typically you can execute a webshell by specifying the file name within the url. So, http://172.16.220.131/shell.php for example.
+
+Why does this work?
+This is an exploit called LFI where users can specify files and directories within the machine. However, in PHP, there is an "include" function that is used to render .php files. By rendering a .php webshell, the website executes the code that is within the php webshell and creates a reverse shell, which is where the computer connects to the attacker.

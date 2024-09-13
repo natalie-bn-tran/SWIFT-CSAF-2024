@@ -35,7 +35,7 @@ Viewing Databases
 SHOW DATABASE;
 
 Viewing Tables
-SHOW TABLES;
+SHOW TABLES IN databasename;
 
 Create New User with Password
 CREATE USER 'username' IDENTIFIED WITH mysql_native_password BY 'password';

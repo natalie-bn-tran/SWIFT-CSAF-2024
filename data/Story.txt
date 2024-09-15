@@ -8,7 +8,10 @@ Where is this webshell stored?
 I can't tell you where it's stored on this website, but it's called shell.php
 
 How do I execute a webshell?
-The IP address 172.16.220.131 has a file named shell.php which is accessible through the URL. This works because webpages are simply files with code within them, so you can think of a webserver as a filesystem. By specifying the file within the URL, you can load a new webpage. 
+The IP address 172.16.202.131 has a file named shell.php which is accessible through the URL. This works because webpages are simply files with code within them, so you can think of a webserver as a filesystem. By specifying the file within the URL, you can load a new webpage. 
 
 Why does a webshell work?
 This is an exploit called LFI where an attacker is able to specify a resource on the webserver to be loaded. In PHP, there is are functions called 'include' or 'require' that are used to load a specified file's content into the file calling the function.  An attacker can abuse this by exfiltrating sensitive information or even compromising the webserver. If an attacker is able to upload a malicious PHP file, it can be chained with LFI to allow the attacker to gain command execution. With a few commands, an attacker can then create a reverse shell, where the webserver connects to the attacker and allows for full remote access.
+
+Computer 1: 172.16.202.131
+Chatbot: 172.16.202.130

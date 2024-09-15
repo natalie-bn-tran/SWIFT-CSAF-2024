@@ -1,8 +1,11 @@
 import streamlit as st
 from openai import OpenAI
 import random
+import os
 import time
 import mysql.connector as mysql
+import traceback
+from query import load_documents, generate_response
 
 def databaseConnection(dbhost, dbuser, dbpassword):
     conn = mysql.connect(
@@ -12,13 +15,28 @@ def databaseConnection(dbhost, dbuser, dbpassword):
     )
     return conn
 def sqlExecution(query,cursor):
+
+    #if ("databases" in query.casefold()) | ('database' in query.casefold()):
+    #Prvovide extra information like selecting from tableXX....
+    listOfWords = query.split()
+    if ("show" in query.casefold()):
+        messages = f"Displaying {listOfWords[1].replace(';','')}...."
     try:
+        print(query.split())
         cursor.execute(query)
+        message = ""
         for x in cursor.fetchall():
-            print(x)
-    except:
-        print("There was an issue with either the sql query or command was fetchable")
-    
+            message += f'{x}  \n'
+        print(message) 
+    except Exception:
+        print(traceback.format_exc())
+    # else:
+    #     try:
+    #         cursor.execute(query)
+    #         print(cursor.fetchall())
+    #     except Exception:
+    #          print(traceback.format_exc())
+        
 
 #Change page title (shown on browser tab)
 st.set_page_config(page_title="SWIFT's Chatbot")
@@ -79,13 +97,13 @@ if prompt := st.chat_input("What is up?"):
         db = databaseConnection("192.168.1.120","ccdc","ccdc")
         cursor = db.cursor()
         if(prompt == 'sql'):
-            sqlMessage = "Entering SQL mode"          
+            sqlMessage = 'Entering SQL mode...  \nAvailable commands:  \nSELECT and SHOW'          
             st.chat_message("assistant").markdown(sqlMessage)
             st.session_state.messages.append({"role": "assistant", "content": sqlMessage})
         
         else:
             try:
-                cursor.execute(prompt)
+                sqlExecution(prompt, cursor)
             except:
                 print("SQL query is unrecognizeable")
             else:
@@ -96,17 +114,22 @@ if prompt := st.chat_input("What is up?"):
     # Display assistant response in chat message container
         if ((len(st.session_state.messages) >= 2) & (prompt != 'sql')) :
             
-            with st.chat_message("assistant"):
-                stream = client.chat.completions.create(
-                    model=st.session_state["openai_model"],
-                    messages=[
-                        {"role": m["role"], "content": m["content"]}
-                        for m in st.session_state.messages
-                    ],
-                    stream=True,
-                )
-            # Add assistant response to chat history
-                response = st.write_stream(stream)
+            # with st.chat_message("assistant"):
+            #     stream = client.chat.completions.create(
+            #         model=st.session_state["openai_model"],
+            #         messages=[
+            #             {"role": m["role"], "content": m["content"]}
+            #             for m in st.session_state.messages
+            #         ],
+            #         stream=True,
+            #     )
+            # # Add assistant response to chat history
+            #     response = st.write_stream(stream)
+            message_placeholder = st.empty()
+            dataDirectory = "./data/"
+            documents = load_documents(dataDirectory)
+            response = generate_response(prompt,documents)
+            st.chat_message("assistant").markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
         else:     
             exitSQL = "Connection to database has closed"

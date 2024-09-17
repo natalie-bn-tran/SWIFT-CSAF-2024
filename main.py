@@ -7,6 +7,7 @@ import mysql.connector as mysql
 import traceback
 from query import load_documents, generate_response
 
+sqlCommand = "/sql"
 def databaseConnection(dbhost, dbuser, dbpassword):
     conn = mysql.connect(
         host = dbhost,
@@ -20,16 +21,17 @@ def sqlExecution(query,cursor):
     #Prvovide extra information like selecting from tableXX....
     listOfWords = query.split()
     if ("show" in query.casefold()):
-        messages = f"Displaying {listOfWords[1].replace(';','')}...."
+        messages = f"Displaying {listOfWords[1].replace(';','')}....  \n"
+    if ("select" in query.casefold()):
+        messages = f"Display queries from {listOfWords[len(listOfWords) -1].replace(';','')}....  \n"
     try:
-        print(query.split())
         cursor.execute(query)
-        message = ""
+
         for x in cursor.fetchall():
-            message += f'{x}  \n'
-        print(message) 
+            messages += f'{x}  \n'
+        return messages
     except Exception:
-        print(traceback.format_exc())
+        return traceback.format_exc()
     # else:
     #     try:
     #         cursor.execute(query)
@@ -92,39 +94,31 @@ if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
    
     #Matches for the "sql" command to enter the sql mode
-    numberOfSQL = sum([d['content'] == 'sql' for d in st.session_state.messages])
+    numberOfSQL = sum([d['content'] == sqlCommand for d in st.session_state.messages])
     if (numberOfSQL % 2 > 0): 
-        db = databaseConnection("192.168.1.120","ccdc","ccdc")
+        db = databaseConnection("","","")
         cursor = db.cursor()
-        if(prompt == 'sql'):
+        if(prompt == sqlCommand):
             sqlMessage = 'Entering SQL mode...  \nAvailable commands:  \nSELECT and SHOW'          
             st.chat_message("assistant").markdown(sqlMessage)
             st.session_state.messages.append({"role": "assistant", "content": sqlMessage})
         
         else:
             try:
-                sqlExecution(prompt, cursor)
+                sqlResponse = sqlExecution(prompt, cursor)
+                st.chat_message("assistant").markdown(sqlResponse)
+                st.session_state.messages.append({"role": "assistant", "content": sqlResponse})
             except:
-                print("SQL query is unrecognizeable")
+                st.chat_message("assistant").markdown("SQL query is unrecognizeable")
+                st.session_state.messages.append({"role": "assistant", "content": "SQL query is unrecognizeable"})
             else:
                 db.close()
 
         
     else:
     # Display assistant response in chat message container
-        if ((len(st.session_state.messages) >= 2) & (prompt != 'sql')) :
-            
-            # with st.chat_message("assistant"):
-            #     stream = client.chat.completions.create(
-            #         model=st.session_state["openai_model"],
-            #         messages=[
-            #             {"role": m["role"], "content": m["content"]}
-            #             for m in st.session_state.messages
-            #         ],
-            #         stream=True,
-            #     )
-            # # Add assistant response to chat history
-            #     response = st.write_stream(stream)
+        if ((len(st.session_state.messages) >= 2) & (prompt != sqlCommand)) :
+
             message_placeholder = st.empty()
             dataDirectory = "./data/"
             documents = load_documents(dataDirectory)

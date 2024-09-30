@@ -25,7 +25,7 @@ def sqlExecution(query,cursor):
     if ("select" in query.casefold()):
         messages = f"Display queries from {listOfWords[len(listOfWords) -1].replace(';','')}....  \n"
     try:
-        cursor.execute(query)
+        cursor.execute(query.casefold())
 
         for x in cursor.fetchall():
             messages += f'{x}  \n'
@@ -96,7 +96,7 @@ if prompt := st.chat_input("What is up?"):
     #Matches for the "sql" command to enter the sql mode
     numberOfSQL = sum([d['content'] == sqlCommand for d in st.session_state.messages])
     if (numberOfSQL % 2 > 0): 
-        db = databaseConnection("","","")
+        db = databaseConnection("192.168.1.120","ccdc","ccdc")
         cursor = db.cursor()
         if(prompt == sqlCommand):
             sqlMessage = 'Entering SQL mode...  \nAvailable commands:  \nSELECT and SHOW'          

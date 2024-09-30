@@ -6,33 +6,17 @@ SQL has many uses, which inlcude executing queries against databases; retrieving
 
 I am capable of executing SQL commands from my interface. You can achieve this by typing "/sql"
 
+How can I view the contents of a database? 
+Use the "show tables in databasename" command
 
 Databases and Tables
 Database: collection of organized data.
 Tables: containers for data in a database.
 
-Accessing MySQL
-mysql -u user -p #user is most likely root
 
 Creating Databases
 CREATE DATABASE databasename;
 
-Creating Tables
-CREATE TABLE tablename (
-    column1 datatype,
-    column2 datatype,
-    column3 datatype,
-   ....
-);
-
-Example Table Creation
-CREATE TABLE Persons (
-    PersonID int,
-    LastName varchar(255),
-    FirstName varchar(255),
-    Address varchar(255),
-    City varchar(255)
-);
 
 Viewing Databases
 SHOW DATABASE;
@@ -40,11 +24,7 @@ SHOW DATABASE;
 Viewing Tables
 SHOW TABLES IN databasename;
 
-Create New User with Password
-CREATE USER 'username' IDENTIFIED WITH mysql_native_password BY 'password';
 
 Show Users
 SELECT user FROM mysql.user;
 
-Grant User Privileges on Database
-GRANT ALL PRIVILEGES ON database.* to 'user';

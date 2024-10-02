@@ -1,5 +1,5 @@
 What is SQL?
-SQL stands for Structured Query Language and is a language used to manage data in databases.
+SQL stands for Structured Query Language and is a language used to manage data in databases. Using SQL allows a user to easily manage data in a single statement. 
 
 What can SQL do?
 SQL has many uses, which inlcude executing queries against databases; retrieving data from databases; inserting, updating, and deleting database records; creating new databases, tables, and views; and set permissions.
@@ -10,8 +10,8 @@ How can I view the contents of a database?
 Use the "show tables in databasename" command
 
 Databases and Tables
-Database: collection of organized data.
-Tables: containers for data in a database.
+Database: collection of organized data. 
+Tables: containers for data in a database. Excel sheets in a file.
 
 
 Creating Databases
@@ -19,7 +19,7 @@ CREATE DATABASE databasename;
 
 
 Viewing Databases
-SHOW DATABASE;
+SHOW DATABASES;
 
 Viewing Tables
 SHOW TABLES IN databasename;

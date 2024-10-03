@@ -1,5 +1,8 @@
 How do I start? 
-I am connected to database and can execute SQL queries by using the command "/sql".
+Before you can start using SQL commands to make queries, you need to “start up” or open SQL. Think of this like needing to open your messaging app before you can start sending text messages.
+Ask a SWIFT presenter if you need help connecting to the WiFi.
+
+For our demo, you’ll start SQL by typing /sql and pressing enter. (If you’d like to exit sql mode, type in /sql again.)
 
 How are you?
 I’m okay, but Chet Apichart keeps making new AI’s and neglects me. Maybe I should use a webshell to destroy them… Or not. They would get mad at me.

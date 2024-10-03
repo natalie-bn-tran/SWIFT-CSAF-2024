@@ -1,10 +1,23 @@
 What is SQL?
-SQL stands for Structured Query Language and is a language used to manage data in databases. Using SQL allows a user to easily manage data in a single statement. 
+SQL, or structured query language, is a way we can access information from databases. Databases are where big amounts of information is stored. Think about how a school might store information on all their students - they might have databases to keep track of students addresses, contact information, grades, which classes they’re enrolled in, and more!
+What’s possible with SQL? With SQL, you can:
+- Ask questions (or as professionals call them, queries)
+    Ex: “Show me all the students who got an A”
+- Add new information
+    Ex: “Add a new student to our database”
+- Change information
+    Ex: “Update a student’s home address”
+- Delete information
+    Ex: “Remove student records of those who have graduated”
 
 What can SQL do?
 SQL has many uses, which inlcude executing queries against databases; retrieving data from databases; inserting, updating, and deleting database records; creating new databases, tables, and views; and set permissions.
 
 I am capable of executing SQL commands from my interface. You can achieve this by typing "/sql"
+
+To view the rows of a table, use the "select" command, please ask more questions about the "select" command.
+    - Use the "select <columnName> from <databaseName>.<tableName>;
+To view the columns, use the "show command" command. If you are unsure, I am here to help.
 
 How can I view the contents of a database? 
 Use the "show tables in databasename" command
@@ -14,16 +27,19 @@ Database: collection of organized data.
 Tables: containers for data in a database. Excel sheets in a file.
 
 
+
 Creating Databases
-CREATE DATABASE databasename;
+CREATE DATABASE <databasename>;
 
 
 Viewing Databases
 SHOW DATABASES;
 
 Viewing Tables
-SHOW TABLES IN databasename;
+SHOW TABLES IN <databasename?;
 
+Viewing columns
+SHOW COLUMNS from <databasename>.<tablename>;
 
 Show Users
 SELECT user FROM mysql.user;

@@ -10,6 +10,8 @@ What’s possible with SQL? With SQL, you can:
 - Delete information
     Ex: “Remove student records of those who have graduated”
 
+I am capable of running SQL commands. Use "/sql" to enter SQL mode.
+
 What can SQL do?
 SQL has many uses, which inlcude executing queries against databases; retrieving data from databases; inserting, updating, and deleting database records; creating new databases, tables, and views; and set permissions.
 

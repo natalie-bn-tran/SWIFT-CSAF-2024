@@ -8,6 +8,7 @@ import mysql.connector as mysql
 import traceback
 from query import load_documents, generate_response
 
+script_directory= os.path.dirname(os.path.abspath(sys.argv[0]))
 sqlCommand = "/sql"
 def databaseConnection(dbhost, dbuser, dbpassword):
     conn = mysql.connect(
@@ -126,7 +127,7 @@ if prompt := st.chat_input("Type here..."):
         if ((len(st.session_state.messages) >= 2) & (prompt != sqlCommand)) :
 
             message_placeholder = st.empty()
-            dataDirectory = "./data/"
+            dataDirectory = f"{script_directory}/data/"
             documents = load_documents(dataDirectory)
             response = generate_response(prompt,documents)
             st.chat_message("assistant").markdown(response)

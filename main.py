@@ -18,21 +18,28 @@ def databaseConnection(dbhost, dbuser, dbpassword):
     )
     return conn
 def sqlExecution(query,cursor):
-
+    queryLowercase = query.casefold()
     listOfWords = query.split()
-    if ("show" in query.casefold()):
+    if ("show" in queryLowercase):
         messages = f"Displaying {listOfWords[1].replace(';','')}....  \n"
-    if ("select" in query.casefold()):
+    if ("select" in queryLowercase):
         messages = f"Display queries from {listOfWords[len(listOfWords) -1].replace(';','')}....  \n"
+    if ("use" in queryLowercase):
+        return f'The "use" command cannot be executed. Please refer to the show and select commands to view tables, columns, and contents of a database.'
     try:
-        cursor.execute(query.casefold())
+        cursor.execute(queryLowercase)
 
         for x in cursor.fetchall():
             messages += f'{x}  \n'
         return messages
         
     except mysql.errors.ProgrammingError: 
-        return f'Error in "{query}" command. Please exit sql mode by typing "/sql" and ask me more questions.'
+        if("show" in queryLowercase ):
+            return f'Command cannot be executed. Refer to the "show tables in <databasename>" command.'
+        if("select" in queryLowercase):
+            return f'Command cannot be executed. Refer to the "select <column> from <databaseName>.<tablesName>" command.'
+        else: 
+            return f'Error in "{query}" command. Please exit sql mode by typing "/sql" and ask me more questions.'
     # except Exception as e:
     #     exc_type, exc_value, exc_tb = sys.exc_info() 
     #     tb = traceback.TracebackException(exc_type, exc_value,exc_tb) 

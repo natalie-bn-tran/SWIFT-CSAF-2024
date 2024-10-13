@@ -12,6 +12,9 @@ What’s possible with SQL? With SQL, you can:
 
 I am capable of running SQL commands. Use "/sql" to enter SQL mode.
 
+The "use" command is not available, to view contents of a database please specify the database and table like <databaseName>.<tableName>
+
+
 What can SQL do?
 SQL has many uses, which inlcude executing queries against databases; retrieving data from databases; inserting, updating, and deleting database records; creating new databases, tables, and views; and set permissions.
 
@@ -19,6 +22,7 @@ I am capable of executing SQL commands from my interface. You can achieve this b
 
 To view the rows of a table, use the "select" command, please ask more questions about the "select" command.
     - Use the "select <columnName> from <databaseName>.<tableName>;
+    - Replacing <columnName> with an "*" will show all columns of a table
 To view the columns, use the "show command" command. If you are unsure, I am here to help.
 
 How can I view the contents of a database? 
@@ -28,8 +32,6 @@ Databases and Tables
 Database: collection of organized data. 
 Tables: containers for data in a database. Excel sheets in a file.
 
-
-
 Creating Databases
 CREATE DATABASE <databasename>;
 
@@ -37,12 +39,11 @@ CREATE DATABASE <databasename>;
 Viewing Databases
 SHOW DATABASES;
 
-Viewing Tables
-SHOW TABLES IN <databasename?;
+Seeing or Viewing Tables or viewing the contents of a database is below
+SHOW TABLES IN <databasename>;
 
 Viewing columns
 SHOW COLUMNS from <databasename>.<tablename>;
 
-Show Users
-SELECT user FROM mysql.user;
+
 

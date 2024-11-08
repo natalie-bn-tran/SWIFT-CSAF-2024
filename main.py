@@ -6,7 +6,7 @@ import sys
 import time
 import mysql.connector as mysql
 import traceback
-from query import load_documents, generate_response
+
 
 script_directory= os.path.dirname(os.path.abspath(sys.argv[0]))
 sqlCommand = "/sql"
@@ -40,18 +40,6 @@ def sqlExecution(query,cursor):
             return f'Command cannot be executed. Refer to the "select <column> from <databaseName>.<tablesName>" command.'
         else: 
             return f'Error in "{query}" command. Please exit sql mode by typing "/sql" and ask me more questions.'
-    # except Exception as e:
-    #     exc_type, exc_value, exc_tb = sys.exc_info() 
-    #     tb = traceback.TracebackException(exc_type, exc_value,exc_tb) 
-    #     #
-    #     return ''.join(tb.format_exception_only())
-        
-    # else:
-    #     try:
-    #         cursor.execute(query)
-    #         print(cursor.fetchall())
-    #     except Exception:
-    #          print(traceback.format_exc())
         
 
 #Change page title (shown on browser tab)
@@ -68,16 +56,13 @@ def response_generator():
         yield word + " "
         time.sleep(0.05)
 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-# Set a default model
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-4o-mini"
+
 #Initialize pop window ("title", "size of window")
-@st.dialog("Welcome to SWIFT's Chatbot @ CSAF 2024", width= "large")
+@st.dialog("Welcome to SWIFT's No_Chatbot!", width= "large")
 def display():
 
     #Description
-    st.write("Chatbot is work in progress. Please come back on October 17th")
+    st.write("I only make SQL queries. I do not have a freedom of speech.")
 
     #Close button
     if st.button("Close"):
@@ -110,7 +95,7 @@ if prompt := st.chat_input("Type here..."):
     #Matches for the "sql" command to enter the sql mode
     numberOfSQL = sum([d['content'] == sqlCommand for d in st.session_state.messages])
     if (numberOfSQL % 2 > 0): 
-        db = databaseConnection(st.secrets["host"],st.secrets["user"],st.secrets["password"])
+        db = databaseConnection(os.environ["dbhost"],os.environ["dbuser"],os.environ["dbpassword"])
         cursor = db.cursor()
         if(prompt == sqlCommand):
             sqlMessage = 'Entering SQL mode...  \nPlease type "/sql" again to exit sql mode  \nAvailable commands:  \nSELECT and SHOW'          
@@ -133,10 +118,7 @@ if prompt := st.chat_input("Type here..."):
     # Display assistant response in chat message container
         if ((len(st.session_state.messages) >= 2) & (prompt != sqlCommand)) :
 
-            message_placeholder = st.empty()
-            dataDirectory = f"{script_directory}/data/"
-            documents = load_documents(dataDirectory)
-            response = generate_response(prompt,documents)
+            response = "I do not speak anymore. Only do SQL queries"
             st.chat_message("assistant").markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
         else:     
